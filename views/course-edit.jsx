@@ -7,7 +7,7 @@ function CourseEdit(props) {
         <MainLayout {...props}>
             <h1>Edit {course.title}</h1>
 
-            <form action="/courses/edit" method="post">
+            <form action="/courses/edit" method="post" className='course-form'>
                 <div className="input-field">
                     <input defaultValue={course.title} id="title" name="title" type="text" className="validate" required/>
                     <label htmlFor="title">Course name</label>
@@ -27,7 +27,11 @@ function CourseEdit(props) {
                 </div>
 
                 <input type="hidden" name="id" defaultValue={course.id}/>
-                <button className="btn btn-primary">Save</button>
+                <button type='submit' className="btn btn-primary">Save</button>
+            </form>
+            <form action='/courses/remove' method='post'>
+                <input type="hidden" name='id' defaultValue={course.id}/>
+                <button type='submit' className="btn red">Remove</button>
             </form>
         </MainLayout>
     );
