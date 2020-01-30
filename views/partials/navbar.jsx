@@ -1,7 +1,7 @@
 const React = require('react');
 
 function Navbar(props) {
-    const {isHome, isCourses, isAdd, isCart} = props;
+    const {isHome, isCourses, isAdd, isCart, isOrder} = props;
 
     return (
         <nav>
@@ -16,6 +16,8 @@ function Navbar(props) {
                     <li className={isAdd ? "active" : ""}><a href="/add">Add course</a></li>
 
                     <li className={isCart ? "active" : ""}><a href="/cart">Cart</a></li>
+
+                    <li className={isOrder ? "active" : ""}><a href="/orders">Orders</a></li>
 
                 </ul>
             </div>

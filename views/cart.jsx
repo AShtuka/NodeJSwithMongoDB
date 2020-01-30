@@ -36,6 +36,10 @@ function Cart(props) {
                         <p>
                             <strong>Price: </strong><span className="price">{price}</span>
                         </p>
+
+                        <form action="/orders" method="post">
+                            <button type='submit' className='btn'>Make order</button>
+                        </form>
                     </>
                     : ''}
             </div>

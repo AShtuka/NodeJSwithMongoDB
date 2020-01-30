@@ -20,10 +20,10 @@ function Courses(props) {
                                                     <p className="price">{course.price}</p>
                                                 </div>
                                                 <div className="card-action actions">
-                                                    <a href={`/courses/${course._id}`} target="_blank">See course details</a>
-                                                    <a href={`/courses/${course._id}/edit?allow=true`} target="_blank">Edit</a>
+                                                    <a href={`/courses/${course.id}`} target="_blank">See course details</a>
+                                                    <a href={`/courses/${course.id}/edit?allow=true`} target="_blank">Edit</a>
                                                     <form action="/cart/add" method="post">
-                                                        <input type="hidden" name="id" value={course._id}/>
+                                                        <input type="hidden" name="id" value={course.id}/>
                                                         <button type="submit" className="btn btn-primary">Buy</button>
                                                     </form>
                                                 </div>
