@@ -7,7 +7,7 @@ function Cart(props) {
         <MainLayout {...props}>
             <h1>Cart</h1>
             <div id="cart">
-                {courses ?
+                {courses.length > 0 ?
                     <>
                         <table>
                             <thead>
@@ -41,7 +41,7 @@ function Cart(props) {
                             <button type='submit' className='btn'>Make order</button>
                         </form>
                     </>
-                    : ''}
+                    : 'Your cart is empty'}
             </div>
         </MainLayout>
     );

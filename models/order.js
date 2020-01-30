@@ -28,11 +28,4 @@ const OrderSchema = new Schema({
     }
 });
 
-// CourseSchema.method('toClient', function () {
-//     const course = this.toObject();
-//     course.id = course._id;
-//     delete course._id;
-//     return course;
-// })
-
 module.exports = Order = mongoose.model("order", OrderSchema, "orders");

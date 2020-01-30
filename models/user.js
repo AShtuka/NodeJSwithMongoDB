@@ -58,4 +58,9 @@ UserSchema.methods.removeFromCart = function(id) {
     return this.save();
 };
 
+UserSchema.methods.cleanCart = function() {
+    this.cart = {items: []};
+    return this.save();
+};
+
 module.exports = User = mongoose.model("user", UserSchema, "users");
