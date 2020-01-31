@@ -2,6 +2,7 @@ const React = require('react');
 const MainLayout = require('./layouts/main');
 
 function Add(props) {
+    const {csrf} = props;
     return (
         <MainLayout {...props}>
             <h1>Add course</h1>
@@ -26,6 +27,8 @@ function Add(props) {
                 </div>
 
                 <button className="btn btn-primary">Add course</button>
+
+                <input type='hidden' name='_csrf' defaultValue={csrf}/>
             </form>
         </MainLayout>
     );

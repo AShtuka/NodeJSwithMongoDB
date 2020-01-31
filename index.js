@@ -4,6 +4,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 const expressReactView = require('express-react-views');
 const path = require('path');
+const csrf = require('csurf');
 
 
 const homeRoutes = require('./routes/home');
@@ -13,7 +14,6 @@ const cartRoutes = require('./routes/cart');
 const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
 
-const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
 
@@ -37,6 +37,7 @@ app.use(session({
     saveUninitialized: false,
     store: store
 }));
+app.use(csrf());
 app.use(varMiddleware);
 app.use(userMiddleware);
 app.use('/', homeRoutes);

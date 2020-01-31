@@ -2,7 +2,7 @@ const React = require('react');
 const MainLayout = require('./layouts/main');
 
 function Cart(props) {
-    const {courses, price} = props;
+    const {courses, price, csrf} = props;
     return (
         <MainLayout {...props}>
             <h1>Cart</h1>
@@ -25,7 +25,12 @@ function Cart(props) {
                                                 <td>{course.title}</td>
                                                 <td>{course.count}</td>
                                                 <td>
-                                                    <button className="btn btn-small js-remove" data-id={course.id}>Delete</button>
+                                                    <button className="btn btn-small js-remove"
+                                                            data-id={course.id}
+                                                            data-csrf={csrf}
+                                                    >
+                                                        Delete
+                                                    </button>
                                                 </td>
                                             </tr>
                                             )
@@ -39,6 +44,7 @@ function Cart(props) {
 
                         <form action="/orders" method="post">
                             <button type='submit' className='btn'>Make order</button>
+                            <input type='hidden' name='_csrf' defaultValue={csrf}/>
                         </form>
                     </>
                     : 'Your cart is empty'}

@@ -2,7 +2,7 @@ const React = require('react');
 const MainLayout = require('./layouts/main');
 
 function Courses(props) {
-    const {courses, isAuth} = props;
+    const {courses, isAuth, csrf} = props;
     return (
         <MainLayout {...props}>
             <h1>Courses</h1>
@@ -27,6 +27,7 @@ function Courses(props) {
                                                             <form action="/cart/add" method="post">
                                                                 <input type="hidden" name="id" value={course.id}/>
                                                                 <button type="submit" className="btn btn-primary">Buy</button>
+                                                                <input type='hidden' name='_csrf' defaultValue={csrf}/>
                                                             </form>
                                                         </>
                                                         : ''

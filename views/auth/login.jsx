@@ -2,6 +2,7 @@ const React = require('react');
 const MainLayout = require('../layouts/main');
 
 function Login(props) {
+    const {csrf} = props;
     return (
         <MainLayout {...props}>
             <div className='auth'>
@@ -29,11 +30,20 @@ function Login(props) {
 
                             <button className="btn btn-primary" type='submit'>Log In</button>
 
+                            <input type='hidden' name='_csrf' defaultValue={csrf}/>
+
                         </form>
                     </div>
                     <div id="registration" className="col s6 offset-s3">
                         <h1>Create account</h1>
                         <form action="/auth/registration" method="post">
+
+                            <div className="input-field">
+                                <input id="name" name="name" type="text" className="validate" required/>
+                                <label htmlFor="name">Name</label>
+                                <span className="helper-text" data-error="Input your name"></span>
+                            </div>
+
                             <div className="input-field">
                                 <input id="emailReg" name="email" type="email" className="validate" required/>
                                 <label htmlFor="emailReg">Email</label>
@@ -53,6 +63,8 @@ function Login(props) {
                             </div>
 
                             <button className="btn btn-primary" type='submit'>Registration</button>
+
+                            <input type='hidden' name='_csrf' defaultValue={csrf}/>
 
                         </form>
                     </div>

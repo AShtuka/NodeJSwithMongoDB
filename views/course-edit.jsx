@@ -2,7 +2,7 @@ const React = require('react');
 const MainLayout = require('./layouts/main');
 
 function CourseEdit(props) {
-    const {course} = props;
+    const {course, csrf} = props;
     return (
         <MainLayout {...props}>
             <h1>Edit {course.title}</h1>
@@ -27,10 +27,12 @@ function CourseEdit(props) {
                 </div>
 
                 <input type="hidden" name="id" defaultValue={course.id}/>
+                <input type='hidden' name='_csrf' defaultValue={csrf}/>
                 <button type='submit' className="btn btn-primary">Save</button>
             </form>
             <form action='/courses/remove' method='post'>
                 <input type="hidden" name='id' defaultValue={course.id}/>
+                <input type='hidden' name='_csrf' defaultValue={csrf}/>
                 <button type='submit' className="btn red">Remove</button>
             </form>
         </MainLayout>
