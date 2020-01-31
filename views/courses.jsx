@@ -2,7 +2,7 @@ const React = require('react');
 const MainLayout = require('./layouts/main');
 
 function Courses(props) {
-    const {courses} = props;
+    const {courses, isAuth} = props;
     return (
         <MainLayout {...props}>
             <h1>Courses</h1>
@@ -21,11 +21,17 @@ function Courses(props) {
                                                 </div>
                                                 <div className="card-action actions">
                                                     <a href={`/courses/${course.id}`} target="_blank">See course details</a>
-                                                    <a href={`/courses/${course.id}/edit?allow=true`} target="_blank">Edit</a>
-                                                    <form action="/cart/add" method="post">
-                                                        <input type="hidden" name="id" value={course.id}/>
-                                                        <button type="submit" className="btn btn-primary">Buy</button>
-                                                    </form>
+                                                    {isAuth ?
+                                                        <>
+                                                            <a href={`/courses/${course.id}/edit?allow=true`} target="_blank">Edit</a>
+                                                            <form action="/cart/add" method="post">
+                                                                <input type="hidden" name="id" value={course.id}/>
+                                                                <button type="submit" className="btn btn-primary">Buy</button>
+                                                            </form>
+                                                        </>
+                                                        : ''
+                                                    }
+
                                                 </div>
                                             </div>
                                         </div>
