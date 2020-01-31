@@ -7,7 +7,9 @@ const bcrypt = require('bcryptjs');
 router.get('/login', async (req, res, next) => {
     res.render('auth/login', {
         title: 'Auth',
-        isLogin: true
+        isLogin: true,
+        loginError: req.flash('loginError'),
+        regError: req.flash('regError'),
     })
 });
 
@@ -36,9 +38,11 @@ router.post('/login', async (req, res) => {
                     }
                 })
             } else {
+                req.flash('loginError', 'wrong password');
                 res.redirect('/auth/login#login')
             }
         } else {
+            req.flash('loginError', 'user with this email does not exist');
             res. redirect('/auth/login#login')
         }
     } catch (e) {
@@ -51,7 +55,8 @@ router.post('/registration', async (req, res, next) => {
         const {name, email, password, passwordConfirm} = req.body;
         const candidate = await User.findOne({email});
         if (candidate) {
-            res.redirect('/auth/registration#registration')
+            req.flash('regError', 'email already exists');
+            res.redirect('/auth/login#registration')
         } else {
             const hashPassword = await bcrypt.hash(password, 10);
             const user = new User({name, email, password: hashPassword, cart: {items: []}});

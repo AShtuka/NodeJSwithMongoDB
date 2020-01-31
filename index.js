@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 const expressReactView = require('express-react-views');
+const flash = require('connect-flash');
 const path = require('path');
 const csrf = require('csurf');
 
@@ -38,6 +39,7 @@ app.use(session({
     store: store
 }));
 app.use(csrf());
+app.use(flash());
 app.use(varMiddleware);
 app.use(userMiddleware);
 app.use('/', homeRoutes);

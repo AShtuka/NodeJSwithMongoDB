@@ -2,7 +2,7 @@ const React = require('react');
 const MainLayout = require('../layouts/main');
 
 function Login(props) {
-    const {csrf} = props;
+    const {csrf, loginError, regError} = props;
     return (
         <MainLayout {...props}>
             <div className='auth'>
@@ -14,7 +14,11 @@ function Login(props) {
                         </ul>
                     </div>
                     <div id="login" className="col s6 offset-s3">
+
                         <h1>Log in shop</h1>
+
+                        {loginError ? <p className='alert'>{loginError}</p> : <></>}
+
                         <form action="/auth/login" method="post">
                             <div className="input-field">
                                 <input id="email" name="email" type="email" className="validate" required/>
@@ -35,7 +39,11 @@ function Login(props) {
                         </form>
                     </div>
                     <div id="registration" className="col s6 offset-s3">
+
                         <h1>Create account</h1>
+
+                        {regError ? <p className='alert'>{regError}</p> : <></>}
+
                         <form action="/auth/registration" method="post">
 
                             <div className="input-field">
