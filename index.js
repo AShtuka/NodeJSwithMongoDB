@@ -6,6 +6,7 @@ const expressReactView = require('express-react-views');
 const flash = require('connect-flash');
 const path = require('path');
 const csrf = require('csurf');
+const keys = require('./keys');
 
 
 const homeRoutes = require('./routes/home');
@@ -18,12 +19,12 @@ const authRoutes = require('./routes/auth');
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
 
-const MONGODB_URL = 'mongodb+srv://Alex:mongodb@mongolearningdb-dq4cp.mongodb.net/NodeJSwithMongoDB';
+// const MONGODB_URL = 'mongodb+srv://Alex:mongodb@mongolearningdb-dq4cp.mongodb.net/NodeJSwithMongoDB';
 
 const app = express();
 const store = new MongoStore({
     collection: 'sessions',
-    uri: MONGODB_URL
+    uri: keys.MONGODB_URL
 });
 
 app.set('views', __dirname + '/views');
@@ -33,7 +34,7 @@ app.engine('jsx', expressReactView.createEngine());
 app.use(express.static(path.join(__dirname,'public')));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
-    secret: 'secret value',
+    secret: keys.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: store
@@ -53,7 +54,7 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
     try {
-        await mongoose.connect(MONGODB_URL, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+        await mongoose.connect(keys.MONGODB_URL, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`)
         });
