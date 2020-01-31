@@ -14,7 +14,7 @@ function Login(props) {
                     </div>
                     <div id="login" className="col s6 offset-s3">
                         <h1>Log in shop</h1>
-                        <form action="/add" method="post">
+                        <form action="/auth/login" method="post">
                             <div className="input-field">
                                 <input id="email" name="email" type="email" className="validate" required/>
                                 <label htmlFor="email">Email</label>
@@ -33,7 +33,7 @@ function Login(props) {
                     </div>
                     <div id="registration" className="col s6 offset-s3">
                         <h1>Create account</h1>
-                        <form action="/add" method="post">
+                        <form action="/auth/registration" method="post">
                             <div className="input-field">
                                 <input id="emailReg" name="email" type="email" className="validate" required/>
                                 <label htmlFor="emailReg">Email</label>

@@ -1,8 +1,7 @@
 const React = require('react');
 
 function Navbar(props) {
-    const {isHome, isCourses, isAdd, isCart, isOrder, isLogin} = props;
-
+    const {isHome, isCourses, isAdd, isCart, isOrder, isLogin, isAuth} = props;
     return (
         <nav>
             <div className="nav-wrapper">
@@ -13,13 +12,21 @@ function Navbar(props) {
 
                     <li className={isCourses ? "active" : ""}><a href="/courses">Courses</a></li>
 
-                    <li className={isAdd ? "active" : ""}><a href="/add">Add course</a></li>
+                    {isAuth ?
+                        <>
+                            <li className={isAdd ? "active" : ""}><a href="/add">Add course</a></li>
 
-                    <li className={isCart ? "active" : ""}><a href="/cart">Cart</a></li>
+                            <li className={isCart ? "active" : ""}><a href="/cart">Cart</a></li>
 
-                    <li className={isOrder ? "active" : ""}><a href="/orders">Orders</a></li>
+                            <li className={isOrder ? "active" : ""}><a href="/orders">Orders</a></li>
 
-                    <li className={isLogin ? "active" : ""}><a href="/auth/login#login">Log In</a></li>
+                            <li ><a href="/auth/logout">Log Out</a></li>
+                        </>
+                        :
+                        ''
+                    }
+
+                    {!isAuth ?  <li className={isLogin ? "active" : ""}><a href="/auth/login#login">Log In</a></li> : ''}
 
                 </ul>
             </div>

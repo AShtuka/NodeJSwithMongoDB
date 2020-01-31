@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const session = require('express-session');
 const expressReactView = require('express-react-views');
 const path = require('path');
 
@@ -11,6 +12,7 @@ const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
 
 const User = require('./models/user');
+const varMiddleware = require('./middleware/variables');
 
 const app = express();
 
@@ -18,18 +20,14 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jsx');
 app.engine('jsx', expressReactView.createEngine());
 
-app.use(async (req, res, next) => {
-    try {
-        const user = await User.findById('5e31dccf2d687209d4b0cc66');
-        req.user = user;
-        next()
-    } catch (e) {
-        console.log(e)
-    }
-});
-
 app.use(express.static(path.join(__dirname,'public')));
 app.use(express.urlencoded({extended: true}));
+app.use(session({
+    secret: 'secret value',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(varMiddleware);
 app.use('/', homeRoutes);
 app.use('/add', addRoutes);
 app.use('/courses', coursesRoutes);
@@ -43,15 +41,6 @@ async function start() {
     try {
         const url = 'mongodb+srv://Alex:mongodb@mongolearningdb-dq4cp.mongodb.net/NodeJSwithMongoDB';
         await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
-        const candidate = await User.findOne();
-        if (!candidate) {
-            const user = new User({
-                email: 'sasha@gmail.com',
-                name: 'Sasha',
-                cart: {items: []}
-            })
-            await user.save();
-        }
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`)
         });
