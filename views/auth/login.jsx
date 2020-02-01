@@ -32,7 +32,12 @@ function Login(props) {
                                 <span className="helper-text" data-error="Input password"></span>
                             </div>
 
-                            <button className="btn btn-primary" type='submit'>Log In</button>
+                            <div className='login-btn-container'>
+                                <button className="btn btn-primary" type='submit'>Log In</button>
+                                <a href="/auth/reset">
+                                    <button className="btn btn-primary" type='button'>Forgot password ?</button>
+                                </a>
+                            </div>
 
                             <input type='hidden' name='_csrf' defaultValue={csrf}/>
 

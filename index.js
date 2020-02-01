@@ -8,7 +8,6 @@ const path = require('path');
 const csrf = require('csurf');
 const keys = require('./keys');
 
-
 const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
 const coursesRoutes = require('./routes/courses');
@@ -18,8 +17,6 @@ const authRoutes = require('./routes/auth');
 
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
-
-// const MONGODB_URL = 'mongodb+srv://Alex:mongodb@mongolearningdb-dq4cp.mongodb.net/NodeJSwithMongoDB';
 
 const app = express();
 const store = new MongoStore({
