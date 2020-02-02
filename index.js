@@ -14,10 +14,12 @@ const coursesRoutes = require('./routes/courses');
 const cartRoutes = require('./routes/cart');
 const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
-const errorPageHandler = require('./middleware/errorPage');
+const errorPageMiddleware = require('./middleware/errorPage');
+const uploadFileMiddleware = require('./middleware/uploadFile');
 
 const app = express();
 const store = new MongoStore({
@@ -30,6 +32,7 @@ app.set('view engine', 'jsx');
 app.engine('jsx', expressReactView.createEngine());
 
 app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'images')));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
     secret: keys.SESSION_SECRET,
@@ -37,18 +40,21 @@ app.use(session({
     saveUninitialized: false,
     store: store
 }));
+app.use(uploadFileMiddleware.single('avatar'));
 app.use(csrf());
 app.use(flash());
 app.use(varMiddleware);
 app.use(userMiddleware);
+
 app.use('/', homeRoutes);
 app.use('/add', addRoutes);
 app.use('/courses', coursesRoutes);
 app.use('/cart', cartRoutes);
 app.use('/orders', ordersRoutes);
 app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 
-app.use(errorPageHandler);
+app.use(errorPageMiddleware);
 
 const PORT = process.env.PORT || 3000;
 
