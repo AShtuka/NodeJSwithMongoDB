@@ -2,7 +2,7 @@ const React = require('react');
 const MainLayout = require('./layouts/main');
 
 function Courses(props) {
-    const {courses, isAuth, csrf} = props;
+    const {courses, isAuth, csrf, userId} = props;
     return (
         <MainLayout {...props}>
             <h1>Courses</h1>
@@ -23,7 +23,7 @@ function Courses(props) {
                                                     <a href={`/courses/${course.id}`} target="_blank">See course details</a>
                                                     {isAuth ?
                                                         <>
-                                                            <a href={`/courses/${course.id}/edit?allow=true`} target="_blank">Edit</a>
+                                                            {course.userId.id === userId ? <a href={`/courses/${course.id}/edit?allow=true`} target="_blank">Edit</a> : '' }
                                                             <form action="/cart/add" method="post">
                                                                 <input type="hidden" name="id" value={course.id}/>
                                                                 <button type="submit" className="btn btn-primary">Buy</button>
