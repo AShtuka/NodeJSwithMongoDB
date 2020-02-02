@@ -3,12 +3,14 @@ const User = require('../models/user');
 const router = Router();
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const {validationResult} = require('express-validator');
 const sendEmail = require('../emails/sendEmail');
 const reqEmail = require('../emails/registration');
 const resetEmail = require('../emails/reset');
+const {registrationValidators, loginValidators, passwordValidators, resetEmailValidators} = require('./utils/validators');
 
 
-router.get('/login', async (req, res, next) => {
+router.get('/login', async (req, res) => {
     res.render('auth/login', {
         title: 'Auth',
         isLogin: true,
@@ -17,56 +19,34 @@ router.get('/login', async (req, res, next) => {
     })
 });
 
-router.get('/logout', async (req, res, next) => {
+router.get('/logout', async (req, res) => {
     req.session.destroy(() => {
         res.redirect('/auth/login#login')
     });
 });
 
-router.post('/login', async (req, res) => {
-    try{
-        const {email, password} = req.body;
-        const candidate = await User.findOne({email});
-        if (candidate) {
-            const isSame = await bcrypt.compare(password, candidate.password);
-            if (isSame) {
-                const user = candidate;
-                req.session.user = user;
-                req.session.isAuthenticated = true;
-                req.session.save(err => {
-                    if (err) {
-                        throw err;
-                    } else {
-                        res.redirect('/');
-                    }
-                })
-            } else {
-                req.flash('loginError', 'wrong password');
-                res.redirect('/auth/login#login')
-            }
-        } else {
-            req.flash('loginError', 'user with this email does not exist');
-            res. redirect('/auth/login#login')
-        }
-    } catch (e) {
-        console.log(e)
+router.post('/login', loginValidators, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        req.flash('loginError', errors.array()[0].msg);
+        return res.status(422).redirect('/auth/login#login');
     }
+    res.redirect('/');
 });
 
-router.post('/registration', async (req, res, next) => {
+router.post('/registration', registrationValidators, async (req, res, next) => {
     try {
-        const {name, email, password, passwordConfirm} = req.body;
-        const candidate = await User.findOne({email});
-        if (candidate) {
-            req.flash('regError', 'email already exists');
-            res.redirect('/auth/login#registration')
-        } else {
-            const hashPassword = await bcrypt.hash(password, 10);
-            const user = new User({name, email, password: hashPassword, cart: {items: []}});
-            await user.save();
-            res.redirect('/auth/login#login');
-            await sendEmail(reqEmail(email));
+        const {name, email, password} = req.body;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            req.flash('regError', errors.array()[0].msg);
+            return res.status(422).redirect('/auth/login#registration');
         }
+        const hashPassword = await bcrypt.hash(password, 10);
+        const user = new User({name, email, password: hashPassword, cart: {items: []}});
+        await user.save();
+        res.redirect('/auth/login#login');
+        await sendEmail(reqEmail(email));
     } catch (e) {
         console.log(e)
     }
@@ -76,7 +56,12 @@ router.get('/reset', (req, res) => {
     res.render('auth/reset', {title: 'ForgotPassword', resetError: req.flash('resetError')})
 });
 
-router.post('/reset', (req, res) => {
+router.post('/reset', resetEmailValidators, (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        req.flash('resetError', errors.array()[0].msg);
+        return res.status(422).redirect('/auth/reset');
+    }
     try {
         crypto.randomBytes(32, async (err, buffer) => {
             if (err) {
@@ -92,9 +77,6 @@ router.post('/reset', (req, res) => {
                 await sendEmail(resetEmail(candidate.email, token));
                 req.flash('loginError', 'Visit you email and click link to create new password');
                 return res.redirect('/auth/login');
-            } else {
-                req.flash('resetError', 'user with this email does not exist');
-                return res.redirect('/auth/reset');
             }
         })
     } catch (e) {
@@ -127,7 +109,12 @@ router.get('/password/:token', async (req, res) => {
     }
 });
 
-router.post('/password', async (req, res) => {
+router.post('/password', passwordValidators, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        req.flash('newPassError', errors.array()[0].msg);
+        return res.status(422).redirect(`/auth/password/${req.body.token}`);
+    }
    try {
        const user = await User.findOne({
            _id: req.body.userId,
