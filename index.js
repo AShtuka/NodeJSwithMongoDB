@@ -17,6 +17,7 @@ const authRoutes = require('./routes/auth');
 
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
+const errorPageHandler = require('./middleware/errorPage');
 
 const app = express();
 const store = new MongoStore({
@@ -46,6 +47,8 @@ app.use('/courses', coursesRoutes);
 app.use('/cart', cartRoutes);
 app.use('/orders', ordersRoutes);
 app.use('/auth', authRoutes);
+
+app.use(errorPageHandler);
 
 const PORT = process.env.PORT || 3000;
 
