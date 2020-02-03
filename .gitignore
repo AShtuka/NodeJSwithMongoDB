@@ -7,7 +7,6 @@ node_modules
 _brief/
 .DS_Store
 .idea
-.env
 .pnp.js
 npm-debug.log*
 keys/keys.dev.js
