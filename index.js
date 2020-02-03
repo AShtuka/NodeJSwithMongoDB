@@ -7,6 +7,8 @@ const flash = require('connect-flash');
 const path = require('path');
 const csrf = require('csurf');
 const keys = require('./keys');
+const helmet = require('helmet');
+const compression = require('compression');
 
 const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
@@ -32,7 +34,6 @@ app.set('view engine', 'jsx');
 app.engine('jsx', expressReactView.createEngine());
 
 app.use(express.static(path.join(__dirname,'public')));
-app.use('images', express.static(path.join(__dirname,'images')));
 app.use(express.urlencoded({extended: true}));
 app.use(session({
     secret: keys.SESSION_SECRET,
@@ -43,6 +44,8 @@ app.use(session({
 app.use(uploadFileMiddleware.single('avatar'));
 app.use(csrf());
 app.use(flash());
+app.use(helmet());
+app.use(compression());
 app.use(varMiddleware);
 app.use(userMiddleware);
 

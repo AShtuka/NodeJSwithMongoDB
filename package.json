@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.3.0",
     "csurf": "^1.11.0",
@@ -35,6 +36,7 @@
     "express-react-views": "^0.11.0",
     "express-session": "^1.17.0",
     "express-validator": "^6.4.0",
+    "helmet": "^3.21.2",
     "mongoose": "^5.8.9",
     "multer": "^1.4.2",
     "nodemailer": "^6.4.2",
