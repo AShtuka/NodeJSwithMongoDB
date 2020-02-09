@@ -49,3 +49,9 @@
     max-width: 300px;
     height: auto;
 }
+
+@media (max-width: 380px) {
+    .font {
+        font-size: 16px !important;
+    }
+}

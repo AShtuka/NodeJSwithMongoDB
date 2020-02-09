@@ -10,7 +10,7 @@ function Courses(props) {
                 courses.map((course, index) => {
                         return (<div key={index}>
                                    <div className="row">
-                                        <div className="col s6 offset-s3">
+                                        <div className="col s12 m8 offset-m2">
                                             <div className="card">
                                                 <div className="card-image">
                                                     <img src={course.img} alt={course.title}/>
@@ -20,7 +20,7 @@ function Courses(props) {
                                                     <p className="price">{course.price}</p>
                                                 </div>
                                                 <div className="card-action actions">
-                                                    <a href={`/courses/${course.id}`} target="_blank">See course details</a>
+                                                    <a href={`/courses/${course.id}`} target="_blank">Details</a>
                                                     {isAuth ?
                                                         <>
                                                             {course.userId.id === userId ? <a href={`/courses/${course.id}/edit?allow=true`} target="_blank">Edit</a> : '' }

@@ -5,7 +5,7 @@ function CourseEdit(props) {
     const {course, csrf, error, data} = props;
     return (
         <MainLayout {...props}>
-            <h1>Edit {course.title}</h1>
+            <h3>Edit {course.title}</h3>
 
             {error ? <p className='alert'>{error}</p> : <></>}
 

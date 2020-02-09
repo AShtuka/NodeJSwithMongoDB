@@ -13,9 +13,9 @@ function Login(props) {
                             <li className="tab col s6"><a  href="#registration">Registration</a></li>
                         </ul>
                     </div>
-                    <div id="login" className="col s6 offset-s3">
+                    <div id="login" className="col s12 m8 offset-m2">
 
-                        <h1>Log in shop</h1>
+                        <h3>Log in shop</h3>
 
                         {loginError ? <p className='alert'>{loginError}</p> : <></>}
 
@@ -43,9 +43,9 @@ function Login(props) {
 
                         </form>
                     </div>
-                    <div id="registration" className="col s6 offset-s3">
+                    <div id="registration" className="col s12 m8 offset-m2">
 
-                        <h1>Create account</h1>
+                        <h3>Create account</h3>
 
                         {regError ? <p className='alert'>{regError}</p> : <></>}
 

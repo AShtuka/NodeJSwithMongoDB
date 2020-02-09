@@ -5,15 +5,15 @@ function Orders(props) {
     const {orders} = props;
     return (
         <MainLayout {...props}>
-            <h1>My orders</h1>
+            <h2>My orders</h2>
             {orders.length > 0 ?
                 orders.map((order, index) => {
                     return  (
                             <div className='row' key={index}>
-                                <div className='col s6 offset-s3'>
+                                <div className='col s12 m8 offset-m2'>
                                     <div className='card'>
                                         <div className='card-content'>
-                                            <span className='card-title'>OrderNo: {order._id.toString()}</span>
+                                            <span className='card-title font'>OrderNo: {order._id.toString()}</span>
                                             <p className='date'>Date: {order.date.toString()}</p>
                                             <p><em>{order.user.name}</em> ({order.user.userId.email})</p>
                                             <ol>

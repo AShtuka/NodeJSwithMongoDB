@@ -7,9 +7,9 @@ function NewPassword(props) {
         <MainLayout {...props}>
             <div className="row">
 
-                <div className="col s6 offset-s3">
+                <div className="col s12 m8 offset-m2">
 
-                    <h1>Input new password</h1>
+                    <h3>Input new password</h3>
 
                     {newPassError ? <p className='alert'>{newPassError}</p> : <></>}
 

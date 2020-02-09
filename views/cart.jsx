@@ -5,11 +5,11 @@ function Cart(props) {
     const {courses, price, csrf} = props;
     return (
         <MainLayout {...props}>
-            <h1>Cart</h1>
+            <h2>Cart</h2>
             <div id="cart">
                 {courses.length > 0 ?
                     <>
-                        <table>
+                        <table className="centered">
                             <thead>
                                 <tr>
                                     <th>Name</th>

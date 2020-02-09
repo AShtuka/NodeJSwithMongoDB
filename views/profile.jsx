@@ -5,10 +5,10 @@ function Profile(props) {
     const {user, csrf} = props;
     return (
         <MainLayout {...props}>
-            <h1>Profile</h1>
+            <h2>Profile</h2>
             <div className='row'>
 
-                <div className='col s6'>
+                <div className='col s10 m6 offset-s1'>
                     {user.avatarUrl ?
                         <img className='avatar' src={`/${user.avatarUrl}`} alt={`avatar of ${user.name}`}/>
                         :
@@ -17,7 +17,7 @@ function Profile(props) {
 
                 </div>
 
-                <div className='col s6'>
+                <div className='col s10 m6 offset-s1'>
                     <form action="/profile" method='post' encType='multipart/form-data'>
                         <p>Your email: <strong>{user.email}</strong></p>
 

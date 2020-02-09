@@ -5,7 +5,7 @@ function Add(props) {
     const {csrf, error, data} = props;
     return (
         <MainLayout {...props}>
-            <h1>Add course</h1>
+            <h2>Add course</h2>
 
             {error ? <p className='alert'>{error}</p> : <></>}
 

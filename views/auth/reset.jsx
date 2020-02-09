@@ -7,9 +7,9 @@ function Reset(props) {
         <MainLayout {...props}>
                 <div className="row">
 
-                    <div className="col s6 offset-s3">
+                    <div className="col s12 m8 offset-m2">
 
-                        <h1>Forgot password</h1>
+                        <h3>Forgot password</h3>
 
                         {resetError ? <p className='alert'>{resetError}</p> : <></>}
 
